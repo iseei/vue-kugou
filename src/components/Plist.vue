@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { Indicator } from "mint-ui";
+import plistjson from "../json/plist.json";
 export default {
   data() {
     return {
@@ -27,10 +29,17 @@ export default {
   },
   methods: {
     getList() {
+      Indicator.open({ text: "加载中..." });
       this.$http
         .get("http://39.107.79.182:3389/mkugou/plist/index&json=true")
         .then(({ data }) => {
           this.list = data.plist.list.info;
+          Indicator.close();
+        })
+        .catch(e => {
+          // console.log(e);
+          this.list = plistjson.plist.list.info;
+          Indicator.close();
         });
     }
   }
@@ -60,7 +69,7 @@ export default {
         .title {
           display: block;
           position: relative;
-          top:1.2rem;
+          top: 1.2rem;
           height: 3rem;
           margin: 0;
           line-height: 1.5;
@@ -72,12 +81,12 @@ export default {
           bottom: 0;
           font-size: 0.8rem;
           color: #9b9b9b;
-          i{
+          i {
             display: inline-block;
             height: 1rem;
             width: 1rem;
             vertical-align: sub;
-            background: url(../assets/img/icon_music.png) no-repeat (50% 35%)/80%
+            background: url(../assets/img/icon_music.png) no-repeat (50% 35%)/80%;
           }
         }
       }
@@ -90,5 +99,4 @@ export default {
     }
   }
 }
-
 </style>

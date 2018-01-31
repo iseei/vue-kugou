@@ -1,6 +1,6 @@
-/* http://localhost:8080/proxy/rank/list&json=true */
 {
     "JS_CSS_DATE": 20130320,
+    "来源":"http://localhost:8080/proxy/rank/list&json=true",
     "kg_domain": "http://m.kugou.com",
     "src": "http://downmobile.kugou.com/promote/package/download/channel=6",
     "fr": null,

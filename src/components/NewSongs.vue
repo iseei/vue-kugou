@@ -3,7 +3,7 @@
 
     <mt-swipe :auto="5000">
 			<mt-swipe-item v-for="(img, index) in banners" :key="index">
-				<a :href="img.extra.tourl">
+				<a href="javascrpit:;">
 					<img :src="img.imgurl" :title="img.title">
 				</a>
 			</mt-swipe-item>

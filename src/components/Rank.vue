@@ -1,17 +1,18 @@
 <template>
-	<div class="rank">
-		<ul>
-			<li v-for="(item,index) in songList" :to="`/rank/info/${item.rankid}`">
-				<img class="rank-logo" alt="" :src="item.imgurl.replace('{size}', '400')">
-				<span>{{item.rankname}}</span>
-				<img src="../assets/img/arrow_icon.png" alt="" class="rank-next">
-			</li>
-		</ul>
-	</div>
+  <div class="rank">
+    <ul>
+      <li v-for="(item,index) in songList" :to="`/rank/info/${item.rankid}`">
+        <img class="rank-logo" alt="" :src="item.imgurl.replace('{size}', '400')">
+        <span>{{item.rankname}}</span>
+        <img src="../assets/img/arrow_icon.png" alt="" class="rank-next">
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 import { Indicator } from "mint-ui";
+import rankjson from "../json/rank.json";
 export default {
   data() {
     return {
@@ -23,15 +24,17 @@ export default {
   },
   methods: {
     getList() {
-      Indicator.open({
-        text: "加载中...",
-        spinnerType: "snake"
-      });
+      Indicator.open({ text: "加载中..." });
       this.$http
         .get("http://39.107.79.182:3389/mkugou/rank/list&json=true")
         .then(({ data }) => {
-          Indicator.close();
           this.songList = data.rank.list;
+          Indicator.close();
+        })
+        .catch(e => {
+          // console.log(e);
+          this.songList = rankjson.rank.list;
+          Indicator.close();
         });
     }
   }

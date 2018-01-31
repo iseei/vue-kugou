@@ -1,15 +1,15 @@
 <template>
   <div id="app">
     <Header/>
-    <!-- <TopNav/> -->
-    <!-- <div class="main"> -->
-      <!-- <router-view/> -->
+    <TopNav/>
+    <div class="main">
+      <router-view/>
       <!-- <NewSongs/> -->
       <!-- <Rank/> -->
       <!-- <Plist/> -->
       <!-- <Singer/> -->
-      <RankList/>
-    <!-- </div> -->
+      <!-- <RankList/> -->
+    </div>
     <Search/>
     <FtPlay/>
     <DetailPlayer/>
@@ -28,7 +28,7 @@ import Rank from "./components/Rank";
 import Plist from "./components/Plist";
 import Singer from "./components/Singer";
 import Search from "./components/Search";
-import RankList from "./components/RankList";
+// import RankList from "./components/RankList";
 
 export default {
   components: {
@@ -41,7 +41,7 @@ export default {
     Plist,
     Singer,
     Search,
-    RankList
+    // RankList
   },
   computed: {
     // 利用空Vue实例解决兄弟组件事件传递，解决移动端禁用音频自动播放
@@ -64,22 +64,13 @@ body {
   color: #333;
   position: relative;
   margin: 0;
-  /* font-family: Microsoft Yahei; */
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-  // -webkit-font-smoothing: antialiased;
-  // -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   color: #2c3e50;
-  /* margin-top: 60px; */
-  /* font-size: 20px; */
   position: relative;
   .main {
     position: relative;
-    // margin: 0;
-    // padding: 0;
-    // border: 1px red solid;
     margin-top: 3.2143rem*2;
   }
 }
