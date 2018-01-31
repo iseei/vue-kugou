@@ -24,20 +24,8 @@ var store = new Vuex.Store({
 		isPlay: false,
 		isDetailPlay: false,
 		isSearch:false,
-
-		head: {
-			toggle: false,
-			title: '',
-			style: {'background': 'rgba(43,162,251,0)'}
-		},
-		headNav: 'head-nav1',
-		audioLoadding: false,
-
-		showPlayer: false,
-		listenCount: 0,
 	},
 	getters: {
-		headNav: state => state.headNav,
 		audio: state => state.audio,
 		head: state => state.head,
 		audioLoadding: state => state.audioLoadding,
@@ -58,21 +46,11 @@ var store = new Vuex.Store({
 		toggleSearch(state, boolean){
 			state.isSearch = boolean
 		},
-
-
 		setAudioTime(state, time){
 			state.audio.currentLength = time
 		},
 		setCurrent(state, flag){
 			state.audio.currentFlag = flag
-		},
-
-		toggleAudioLoadding: (state, flag) => {
-			state.audioLoadding = flag
-		},
-
-		showPlayer: (state, flag) => {
-			state.showPlayer = flag
 		},
 		setIsPlay: (state, boolean) => {
 			state.isPlay = boolean
@@ -80,10 +58,6 @@ var store = new Vuex.Store({
 		setLrc: (state, lrc) => {
 			state.audio = {...(state.audio), lrc}
 		},
-		setListInfo: (state, {list, index}) => {
-			state.songList = list
-			state.songIndex = index
-		}
 	},
 	actions: {
 		// 仅获得列表
@@ -100,7 +74,6 @@ var store = new Vuex.Store({
 		  },
 		//获得对应hash的歌曲信息，并更新store,更新audio会自动播放，@ended="...next"会循环播放 
 		getSong({commit, state}, hash){
-			// commit('toggleAudioLoadding', true)
 			axios.get(`http://39.107.79.182:3389/wwwkugou/yy/index.php?r=play/getdata&hash=${hash}`).then(({data}) => {
 				// pc端   http://www.kugou.com/yy/index.php?r=play/getdata&hash=ED1AA2BD97FCDEE5F5993AAFB72370D0
 				// 移动端 http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash=ED1AA2BD97FCDEE5F5993AAFB72370D0
@@ -115,7 +88,6 @@ var store = new Vuex.Store({
 				commit('setAudio', audio)
 				commit('setIsPlay',true)
 				// commit('setLrc', lrc)
-				// commit('toggleAudioLoadding', false)	//关闭正在载入...
 			})
 		},
 		prev({dispatch, state}){
