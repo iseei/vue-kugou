@@ -1,7 +1,7 @@
 <template>
   <div class="rank">
     <ul>
-      <li v-for="(item,index) in songList" :to="`/rank/info/${item.rankid}`">
+      <li v-for="(item,index) in list" @click="$router.push(`/rank/info/${item.rankid}`)">
         <img class="rank-logo" alt="" :src="item.imgurl.replace('{size}', '400')">
         <span>{{item.rankname}}</span>
         <img src="../assets/img/arrow_icon.png" alt="" class="rank-next">
@@ -16,7 +16,7 @@ import rankjson from "../json/rank.json";
 export default {
   data() {
     return {
-      songList: []
+      list: []
     };
   },
   created() {
@@ -28,12 +28,12 @@ export default {
       this.$http
         .get("http://39.107.79.182:3389/mkugou/rank/list&json=true")
         .then(({ data }) => {
-          this.songList = data.rank.list;
+          this.list = data.rank.list;
           Indicator.close();
         })
         .catch(e => {
           // console.log(e);
-          this.songList = rankjson.rank.list;
+          this.list = rankjson.rank.list;
           Indicator.close();
         });
     }
@@ -52,6 +52,7 @@ export default {
       border-bottom: 1px solid #e5e5e5;
       font-family: "Microsoft Yahei";
       position: relative;
+      cursor: pointer;
       .rank-logo {
         width: 5.3751rem;
         height: 5.3751rem;

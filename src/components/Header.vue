@@ -1,9 +1,9 @@
 <template>
   <div class="header">
-    <div to="/" class="header-logo">
+    <div to="/" class="header-logo" @click="$router.push('/')">
       <img src="../assets/img/logo.png" alt="">
     </div>
-    <div class="header-down">下载酷狗</div>
+    <div class="header-down" @click="$router.push('/')">下载酷狗</div>
     <div to="/search" class="header-search" @click="toggleSearch()">
       <img src="../assets/img/search.png" alt="">
     </div>

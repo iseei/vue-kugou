@@ -2,13 +2,14 @@
   <div id="app">
     <Header/>
     <TopNav/>
-    <div class="main">
+    <div class="main" v-show="!$store.state.isDetailPlay">
       <router-view/>
       <!-- <NewSongs/> -->
       <!-- <Rank/> -->
       <!-- <Plist/> -->
       <!-- <Singer/> -->
-      <!-- <RankList/> -->
+        <!-- <RankList/> -->
+        <!-- <PlistList/> -->
     </div>
     <Search/>
     <FtPlay/>
@@ -28,7 +29,8 @@ import Rank from "./components/Rank";
 import Plist from "./components/Plist";
 import Singer from "./components/Singer";
 import Search from "./components/Search";
-// import RankList from "./components/RankList";
+import RankList from "./components/RankList";
+import PlistList from "./components/PlistList";
 
 export default {
   components: {
@@ -41,7 +43,8 @@ export default {
     Plist,
     Singer,
     Search,
-    // RankList
+    RankList,
+    PlistList
   },
   computed: {
     // 利用空Vue实例解决兄弟组件事件传递，解决移动端禁用音频自动播放
@@ -51,13 +54,9 @@ export default {
     }
   }
 };
-
 </script>
 
 <style lang="scss">
-html {
-  font-size: 100%;
-}
 body {
   font-size: 1rem;
   background: #fff;
@@ -81,4 +80,5 @@ a {
   text-decoration: none;
   color: inherit;
 }
+html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
 </style>

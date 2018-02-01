@@ -1,7 +1,7 @@
 <template>
   <div class="plist">
     <ul>
-      <li v-for="(item) in list">
+      <li v-for="(item) in list" @click="$router.push(`/plist/list/${item.specialid}`)">
         <img :src="item.imgurl.replace('{size}', '400')" class="rank-logo" alt="">
         <div class="rang-title">
           <p class="title">{{item.specialname}}</p>
@@ -41,7 +41,7 @@ export default {
           this.list = plistjson.plist.list.info;
           Indicator.close();
         });
-    }
+    },
   }
 };
 </script>
@@ -55,6 +55,7 @@ export default {
       width: 100%;
       padding: 10px 0;
       border-bottom: 1px solid #e5e5e5;
+      cursor: pointer;
       .rank-logo {
         width: 5.3751rem;
         height: 5.3751rem;

@@ -53,7 +53,7 @@ export default {
   background: #fff;
   height: 3rem;
   line-height: 3rem;
-  z-index: 8;
+  z-index: 7;
 }
 .topnav ul {
   position: relative;

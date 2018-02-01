@@ -1,6 +1,7 @@
-/* http://m.kugou.com/rank/info/?rankid=6666&page=1&json=true */
+
 {
     "JS_CSS_DATE": 20130320,
+    "来源":"/* http://m.kugou.com/rank/info/?rankid=6666&page=1&json=true */",
     "kg_domain": "http://m.kugou.com",
     "src": "http://downmobile.kugou.com/promote/package/download/channel=6",
     "fr": null,

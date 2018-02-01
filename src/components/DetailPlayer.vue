@@ -31,9 +31,9 @@
         <i class="play-play" :class="{'play-pause':isPlay}" @click="toggleStatus()"></i>
         <i class="play-next" @click="$store.dispatch('next')"></i>
       </div>
-      <div class="download-box">
+      <!-- <div class="download-box">
         <i></i>下载这首歌
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -63,12 +63,15 @@ export default {
   computed: {
     ...mapGetters(["audio", "isDetailPlay", "isPlay"]),
     songLrc() {
-      if (this.audio.lrc) {     
+      if (this.audio.lrc) {
         var temp = this.audio.lrc.split("\r\n");
-        var temp = temp.splice(0, temp.length - 1);        //最后一组“” 
-        temp = temp.map(value => {        
-          var time = value.substr(1, 8).split(/\:|\./);    //["00", "03", "06"]
-          var seconds = parseInt(time[0]) * 60 + parseInt(time[1])+ parseInt(time[2])/100  ; //换算成秒
+        var temp = temp.splice(0, temp.length - 1); //最后一组“”
+        temp = temp.map(value => {
+          var time = value.substr(1, 8).split(/\:|\./); //["00", "03", "06"]
+          var seconds =
+            parseInt(time[0]) * 60 +
+            parseInt(time[1]) +
+            parseInt(time[2]) / 100; //换算成秒
           // console.log(seconds)
           var lrcContent = value.substr(10);
           return {
@@ -76,26 +79,31 @@ export default {
             lrcContent
           };
         });
-        return temp;    //[{,},{}....]
+        return temp; //[{,},{}....]
       }
     },
     lrcOffset() {
-      if (this.currentLrcNum) {         
-          var cc = -(this.currentLrcNum - 1)*1.6 + "rem"
-          return this.currentLrcNum >= 2 ? cc : 0
+      if (this.currentLrcNum) {
+        var cc = -(this.currentLrcNum - 1) * 1.6 + "rem";
+        return this.currentLrcNum >= 2 ? cc : 0;
       }
     },
-    currentLrcNum(){
-      if(this.songLrc){
-        for(var i=0 ; i <= this.songLrc.length-1 ; i++){
-          if(this.songLrc[i].seconds<=this.audio.currentLength && this.songLrc[i+1].seconds>this.audio.currentLength){
-              return i
-          }else if(this.songLrc[this.songLrc.length-1].seconds<=this.audio.currentLength){
-              return i
+    currentLrcNum() {
+      if (this.songLrc) {
+        for (var i = 0; i <= this.songLrc.length - 1; i++) {
+          if (
+            this.songLrc[i].seconds <= this.audio.currentLength &&
+            this.songLrc[i + 1].seconds > this.audio.currentLength
+          ) {
+            return i;
+          } else if (
+            this.songLrc[this.songLrc.length - 1].seconds <=
+            this.audio.currentLength
+          ) {
+            return i;
           }
-       }
+        }
       }
-
     }
   },
   methods: {
@@ -182,8 +190,9 @@ export default {
     }
   }
   .dp-lrc {
+    position: relative;
     width: 100%;
-    height: 5.0rem;
+    height: 5rem;
     overflow: hidden;
     margin-bottom: 10px;
     text-align: center;
@@ -192,7 +201,7 @@ export default {
       transition: all 0.5s;
       transform: translateZ(0);
       color: #afabac;
-      p{
+      p {
         margin: 0;
         padding: 0;
         height: 1.6rem;
@@ -201,12 +210,11 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        &.isCurrentLrc{
+        &.isCurrentLrc {
           color: #d1c90e;
           font-size: 1.2rem;
         }
       }
-
     }
   }
   .mt-range {
@@ -254,8 +262,8 @@ export default {
 }
 
 .dp-control {
-  padding:0 20%;
-  &::after{
+  padding: 0 20%;
+  &::after {
     display: block;
     content: "";
     height: 0;
@@ -265,7 +273,7 @@ export default {
   i {
     display: block;
     width: 33.3%;
-    padding-top: 33.3%;   //padding：% 参考width,长宽固定比
+    padding-top: 33.3%; //padding：% 参考width,长宽固定比
     float: left;
     background: blue;
   }

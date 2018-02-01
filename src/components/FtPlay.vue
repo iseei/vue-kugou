@@ -1,5 +1,5 @@
 <template>
-  <div class="ftplay">
+  <div class="ftplay" v-show="$store.state.isShowPlayer">
     <!-- 隐藏播放 -->
     <div id="player" style="display: none;">
       <audio id="audioPlay" :src="audio.songUrl" autoplay controls="" @timeupdate="change()" @ended="$store.dispatch('next')">
@@ -54,7 +54,7 @@ export default {
     }
   },
   mounted() {
-    this.$parent.eventBus.$on("liClikEvent", function(index) {
+    this.$parent.eventBus.$on("liClickEvent", function(index) {
       let audio = document.getElementById("audioPlay");
       if (audio.src!="") {
         setTimeout(function(){
@@ -69,9 +69,10 @@ export default {
 <style lang="scss">
 .ftplay {
   /* display: none; */
+  position: fixed;
+  z-index: 8;
   width: 100%;
   height: 4.2143rem;
-  position: fixed;
   left: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.9);

@@ -2,16 +2,16 @@
   <div class="newsongs">
 
     <mt-swipe :auto="5000">
-			<mt-swipe-item v-for="(img, index) in banners" :key="index">
-				<a href="javascrpit:;">
-					<img :src="img.imgurl" :title="img.title">
-				</a>
-			</mt-swipe-item>
-		</mt-swipe>
-    <!-- <img v-for="(img,index) in banners" :src="img.imgurl" alt="" :title="img.title" :index="index"> -->
+      <mt-swipe-item v-for="(img, index) in banner" :key="index">
+        <a href="javascrpit:;">
+          <img :src="img.imgurl" :title="img.title" alt="轮播图">
+        </a>
+      </mt-swipe-item>
+    </mt-swipe>
+
     <ul>
-      <li v-for="(song,index) in songList" @click="playAudio(index)" class="palyaudio">
-        <div class="songlist-item">
+      <li v-for="(song,index) in playList" @click="playAudio(index)" class="palyaudio">
+        <div class="playList-item">
           <span>{{song.filename}}</span>
         </div>
         <div class="down">
@@ -26,28 +26,49 @@
 </template>
 
 <script>
+import jsonsong from "../json/jsonsong.json"; //本地json数据
 import axios from "axios";
-import { mapState, mapActions } from "vuex";
+import { Indicator } from "mint-ui";
+// import { mapState, mapActions } from "vuex";
 
 export default {
   data() {
-    return {};
+    return {
+      banner: [],
+      playList: []
+    };
   },
-  computed: {
-    ...mapState(["songList", "banners"])
-  },
+  computed: {},
   created() {
-    this.$store.dispatch("getSongList");
+    this.getPlayList();
   },
   methods: {
+    getPlayList() {
+      this.$http
+        .get("http://39.107.79.182:3389/mkugou/?json=true")
+        .then(({ data }) => {
+          // 解构出response.data
+          this.banner = data.banner;
+          this.playList = data.data;
+          this.$store.commit("setPlayList", this.playList);//初始化播放列表，否则只有点击li才更新播放列表
+          Indicator.close();
+        })
+        .catch(e => {
+          // console.log(e)
+          this.banner = jsonsong.banner;
+          this.playList = jsonsong.data;
+          this.$store.commit("setPlayList", this.playList);  
+          Indicator.close();
+        });
+    },
     playAudio(index) {
-      // li点击只需传递hash、index
-      console.log(index)
-      var hash = this.songList[index].hash;
-      this.$store.commit("setSongIndex", index);
+      // console.log(index);
+      var hash = this.playList[index].hash;
+      this.$store.commit("setPlayList", this.playList);
+      this.$store.commit("setPlayIndex", index);
       this.$store.dispatch("getSong", hash);
       // 兄弟组件传递自定义事件
-      this.$parent.eventBus.$emit('liClikEvent',index)
+      this.$parent.eventBus.$emit("liClickEvent", index);
     }
   }
 };
@@ -55,18 +76,15 @@ export default {
 
 <style lang="scss">
 .mint-swipe {
-  height: 39vw !important;
+  height: 39vw;
 }
-
 .mint-swipe-indicator {
   width: 12px !important;
   height: 12px !important;
 }
-
 .mint-swipe-indicators {
   bottom: 5px !important;
 }
-
 .newsongs {
   position: relative;
   width: 100%;
@@ -83,7 +101,7 @@ export default {
       height: 4.0714rem;
       border-bottom: 1px solid #e5e5e5;
       position: relative;
-      .songlist-item {
+      .playList-item {
         float: left;
         width: 100%;
         height: 4.0714rem;
