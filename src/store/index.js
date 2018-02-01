@@ -31,11 +31,6 @@ var store = new Vuex.Store({
     audio: state => state.audio,
     isDetailPlay: state => state.isDetailPlay,
     isPlay: state => state.isPlay,
-    // head: state => state.head,
-    // audioLoadding: state => state.audioLoadding,
-    // showPlayer: state => state.showPlayer,
-
-
   },
   mutations: {
     setPlayList(state, playList) {
@@ -44,7 +39,6 @@ var store = new Vuex.Store({
     setPlayIndex(state, index) {
       state.playIndex = index
     },
-
     setAudio(state, audio) {
       state.audio = { ...(state.audio),
         ...audio
@@ -62,19 +56,14 @@ var store = new Vuex.Store({
     setIsShowPlayer:(state,boolean) => {
       state.isShowPlayer = boolean
     },
-
-
     setAudioTime(state, time) {
       state.audio.currentLength = time
     },
     setCurrent(state, flag) {
       state.audio.currentFlag = flag
     },
-
     setLrc: (state, lrc) => {
-      state.audio = { ...(state.audio),
-        lrc
-      }
+      state.audio = { ...(state.audio),  lrc }
     },
   },
   actions: {
