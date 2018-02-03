@@ -4,10 +4,6 @@
             <i @click="$store.commit('toggleSearch', false)"></i>
             <span>搜索</span>
         </div>
-        <!-- <div class="search-input">
-            <input type="text" placeholder="歌手/歌名/拼音" v-model='searchCont' @keyup.enter="searchS(searchCont)">
-            <span @click="searchS(searchCont)">搜索</span>
-        </div> -->
         <div class="search-form">
             <form name="searchForm" id="searchForm">
                 <i class="search-icon"></i>
@@ -27,16 +23,6 @@
                 <li> 古风好歌 </li>
             </ul>
         </div>
-        <!-- 
-        <div class="kugou-rm">
-            <span>{{searchTitle}}</span>
-            <div class="kugou-rm-list">
-                <ul>
-                    <li v-if="hotSeen" v-for="item in $store.state.searchList.info" @click="searchS(item.keyword)">{{item.keyword}}</li>
-                    <li v-if="searchSeen" v-for="item in $store.state.searchList.info" @click="searchGetUrl($event)" :hash="item.hash">{{item.filename}}</li>
-                </ul>
-            </div>
-        </div> -->
     </div>
 </template>
 

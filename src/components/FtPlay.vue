@@ -2,7 +2,7 @@
   <div class="ftplay" v-show="$store.state.isShowPlayer">
     <!-- 隐藏播放 -->
     <div id="player" style="display: none;">
-      <audio id="audioPlay" :src="audio.songUrl" autoplay controls="" @timeupdate="change()" @ended="$store.dispatch('next')">
+      <audio id="audioPlay" :src="audio.songUrl" preload="auto" autoplay controls="" @loadstart="isLoading=true"  @timeupdate="change()" @ended="$store.dispatch('next')">
       </audio>
     </div>
     <!-- 隐藏播放 -->
@@ -15,7 +15,7 @@
     </a>
 
     <div class="ft-right">
-      <i class="btn-play" @click="toggleStatus()" :class="{'btn-pause':isPlay}"></i>
+      <i class="btn-play" @click="toggleStatus()" :class="{'btn-pause':isPlay,'btn-loading':isLoading}"></i>
       <i class="btn-next" @click="$store.dispatch('next')"></i>
       <i class="ico-down"></i>
     </div>
@@ -28,10 +28,11 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      isLoading:false
     };
   },
   computed: {
-    ...mapGetters(["audio", "isPlay"]),
+    ...mapGetters(["audio", "isPlay"])
   },
   methods: {
     toggleStatus() {
@@ -43,7 +44,11 @@ export default {
       this.$store.commit("setIsPlay", !this.isPlay);
     },
     change() {
-      var time = document.getElementById("audioPlay").currentTime;  
+      var time = document.getElementById("audioPlay").currentTime;
+      var ready = document.getElementById("audioPlay").readyState;
+      if(ready == 4){
+        this.isLoading=false
+      }
       //currentTime Audio DOM属性,秒（可读/设小数点后6位）
       if (this.audio.currentFlag) {
         document.getElementById("audioPlay").currentTime = this.audio.currentLength;
@@ -56,13 +61,13 @@ export default {
   mounted() {
     this.$parent.eventBus.$on("liClickEvent", function(index) {
       let audio = document.getElementById("audioPlay");
-      if (audio.src!="") {
-        setTimeout(function(){
+      if (audio.src != "") {
+        setTimeout(function() {
           audio.play();
-        },100)
+        }, 100);
       }
     });
-  },
+  }
 };
 </script>
 
@@ -159,5 +164,31 @@ export default {
 }
 .btn-pause {
   background: url(../assets/img/pause_icon.png) no-repeat center/80%;
+}
+.btn-loading {
+  background: url(../assets/img/loading.png) no-repeat center/80%;
+  -webkit-animation: a 1.5s infinite linear;
+  animation: a 1.5s infinite linear;
+}
+@-webkit-keyframes a {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes a {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
 }
 </style>

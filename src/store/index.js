@@ -68,10 +68,7 @@ var store = new Vuex.Store({
   },
   actions: {
     //获得对应hash的歌曲信息，并更新store,更新audio会自动播放，@ended="...next"会循环播放 
-    getSong({
-      commit,
-      state
-    }, hash) {
+    getSong({ commit, state }, hash) {
       axios.get(`http://39.107.79.182:3389/wwwkugou/yy/index.php?r=play/getdata&hash=${hash}`).then(({
         data
       }) => {

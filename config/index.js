@@ -11,25 +11,25 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-			// '/proxy': {
+			// 'mkugou': {
 			// 	target: 'http://m.kugou.com',
 			// 	changeOrigin: true,
 			// 	pathRewrite: {
-			// 		'^/proxy': ''
+			// 		'^http://39.107.79.182:3389/mkugou': ''
 			// 	}
 			// },
-			// '/aproxy': {
+			// 'mobilecdn': {
 			// 	target: 'http://mobilecdn.kugou.com',
 			// 	changeOrigin: true,
 			// 	pathRewrite: {
-			// 		'^/aproxy': ''
+			// 		'^http://39.107.79.182:3389/mobilecdn': ''
 			// 	}
 			// },
-			// '/bproxy': {
+			// 'wwwkugou': {
 			// 	target: 'http://www.kugou.com',
 			// 	changeOrigin: true,
 			// 	pathRewrite: {
-			// 		'^/bproxy': ''
+			// 		'^http://39.107.79.182:3389/wwwkugou': ''
 			// 	}
 			// }
 		},
