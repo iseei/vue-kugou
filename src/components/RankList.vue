@@ -7,7 +7,7 @@
     </div>
 
     <div class="rank-banner" :style="imgBackground">
-      <div class="time">上次更新时间：{{updateTime}}</div>
+      <div class="time">上次更新时间：{{ nowTime()}}</div>
     </div>
 
     <ul class="rank-list">
@@ -30,17 +30,20 @@ import { Indicator } from "mint-ui";
 export default {
   data() {
     return {
-      title:"",
-      imgurl:"",
+      title: "",
+      imgurl: "",
       playList: [],
-      updateTime: "xxx",
+      updateTime: "xxx"
     };
   },
   computed: {
-    imgBackground(){
-      return{
-        background: `url(${this.imgurl.replace("{size}","400")}) no-repeat center/cover`
-      }
+    imgBackground() {
+      return {
+        background: `url(${this.imgurl.replace(
+          "{size}",
+          "400"
+        )}) no-repeat center/cover`
+      };
     }
   },
   mounted() {
@@ -51,7 +54,9 @@ export default {
       Indicator.open("加载中...");
       var infoID = this.$route.params.id;
       this.$http
-        .get(`http://39.107.79.182:3389/mkugou/rank/info/?rankid=${infoID}&page=1&json=true` )
+        .get(
+          `http://39.107.79.182:3389/mkugou/rank/info/?rankid=${infoID}&page=1&json=true`
+        )
         .then(({ data }) => {
           this.title = data.info.rankname;
           this.imgurl = data.info.imgurl;
@@ -74,9 +79,16 @@ export default {
       this.$store.commit("setPlayIndex", index);
       this.$store.dispatch("getSong", hash);
       this.$parent.eventBus.$emit("liClickEvent", index);
+    },
+    nowTime() {
+      var nowDate = new Date();
+      var year = nowDate.getFullYear();
+      var month = nowDate.getMonth() + 1;
+      month = month > 10 ? month : "0" + month;
+      var date = nowDate.getDate();
+      return year + "-" + month + "-" + date;
     }
-  },
-
+  }
 };
 </script>
 <style lang="scss" scoped>
